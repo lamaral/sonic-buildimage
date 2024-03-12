@@ -28,8 +28,7 @@ try:
     import logging.config
     import time  # this is only being used as part of the example
     import signal
-    from as5712_54x.fanutil import FanUtil
-    from as5712_54x.thermalutil import ThermalUtil
+    from sonic_platform import platform
 except ImportError as e:
     raise ImportError('%s - required module not found' % str(e))
 
@@ -86,14 +85,11 @@ class accton_as5712_monitor(object):
         FAN_LEV4_SPEED_PERC = 40
 
 
-        thermal = ThermalUtil()
-        fan = FanUtil()
-
-        temp1 = thermal.get_thermal_1_val()
+        temp1 = platform_chassis.get_thermal(1).get_temperature()
         if temp1 is None:
             return False
 
-        temp2 = thermal.get_thermal_2_val()
+        temp2 = platform_chassis.get_thermal(2).get_temperature()
         if temp2 is None:
             return False
 
